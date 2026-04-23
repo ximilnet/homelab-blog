@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homelab OPSEC | Proxmox, LXC, Self-Hosted Security</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f4f6f8;
+            color: #1e2a3e;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .site-header {
+            background: #1e2a3e;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .site-header nav a {
+            color: white;
+            margin: 0 0.75rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .site-header nav a:hover {
+            text-decoration: underline;
+        }
+        .site-footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #5c6f87;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 1.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .latest-post {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid #e2e8f0;
+        }
+        .btn {
+            display: inline-block;
+            background: #1e2a3e;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+        .btn:hover {
+            background: #2c3e50;
+            text-decoration: none;
+        }
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+            .site-header nav a {
+                display: inline-block;
+                margin: 0.25rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="site-header">
+        <nav>
+            <a href="https://ximilnet.github.io/homelab-blog/">🏠 Home</a>
+            <a href="https://ximilnet.github.io/homelab-blog/blog.html">📝 Blog</a>
+            <a href="https://ximilnet.github.io/homelab-blog/contact.html">📧 Contact</a>
+        </nav>
+    </div>
+
+    <h1>🔒 Homelab OPSEC</h1>
+    <p>Proxmox, LXC, WireGuard, and self-hosted security — one tutorial at a time.</p>
+
+    <h2>📺 About This Channel</h2>
+    <p>I build a security-first homelab and share everything I learn. My focus is on <strong>OPSEC (Operational Security)</strong>: isolation, least privilege, VPN-first access, and self-hosted services with no external dependencies.</p>
+
+    <p>All tutorials are hands-on, step-by-step, and designed for beginners who want to learn Proxmox, LXC containers, and secure self-hosting.</p>
+
+    <div class="latest-post">
+        <h3>📝 Latest Tutorial</h3>
+        <h2 style="margin: 0 0 0.5rem 0; border: none;">Proxmox LXC Explained: What You're Actually Creating</h2>
+        <p>Learn what LXC containers are, how they differ from virtual machines, and how to create your first container with Debian 12. Includes a Jellyfin demo.</p>
+        <a href="https://ximilnet.github.io/homelab-blog/post-lxc-tutorial.html" class="btn">Read the Tutorial →</a>
+    </div>
+
+    <h2>🔜 Upcoming Tutorials</h2>
+    <ul>
+        <li>🔐 WireGuard VPN in an unprivileged LXC</li>
+        <li>🔄 Caddy reverse proxy with internal HTTPS</li>
+        <li>📡 Mounting SMB/NFS shares for Jellyfin</li>
+        <li>🔎 Self-hosted SearXNG search engine</li>
+        <li>🛡️ Proxmox 2FA configuration</li>
+    </ul>
+
+    <div class="site-footer">
+        <p>🔒 OPSEC-focused homelab tutorials · Self-hosted mindset · No tracking</p>
+    </div>
+</div>
+</body>
+</html>

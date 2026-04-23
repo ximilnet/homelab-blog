@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Archive - Homelab OPSEC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f4f6f8;
+            color: #1e2a3e;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .site-header {
+            background: #1e2a3e;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .site-header nav a {
+            color: white;
+            margin: 0 0.75rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .site-header nav a:hover {
+            text-decoration: underline;
+        }
+        .site-footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #5c6f87;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 1.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .post-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .post-list li {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .post-list h3 {
+            margin-bottom: 0.25rem;
+        }
+        .post-date {
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="site-header">
+        <nav>
+            <a href="https://ximilnet.github.io/homelab-blog/">🏠 Home</a>
+            <a href="https://ximilnet.github.io/homelab-blog/blog.html">📝 Blog</a>
+            <a href="https://ximilnet.github.io/homelab-blog/contact.html">📧 Contact</a>
+        </nav>
+    </div>
+
+    <h1>📝 Blog Archive</h1>
+    <p>All tutorials, guides, and OPSEC notes.</p>
+
+    <ul class="post-list">
+        <li>
+            <h3><a href="https://ximilnet.github.io/homelab-blog/post-lxc-tutorial.html">Proxmox LXC Explained: What You're Actually Creating</a></h3>
+            <div class="post-date">April 23, 2026</div>
+            <p>LXC vs VM, step-by-step container creation, first commands, and a Jellyfin demo.</p>
+        </li>
+    </ul>
+
+    <div class="site-footer">
+        <p>🔒 More tutorials coming soon. Subscribe to the YouTube channel to stay updated.</p>
+    </div>
+</div>
+</body>
+</html>
