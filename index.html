@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homelab OPSEC | Proxmox, LXC, Self-Hosted Security</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f4f6f8;
+            color: #1e2a3e;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .site-header {
+            background: #1e2a3e;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .site-header nav a {
+            color: white;
+            margin: 0 0.75rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .site-header nav a:hover {
+            text-decoration: underline;
+        }
+
+        .site-footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #5c6f87;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #1e2a3e;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+            color: #1e2a3e;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin: 1rem 0 0.5rem 0;
+            color: #2c3e50;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: #e2e8f0;
+            color: #1e2a3e;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.25rem;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .post-meta {
+            color: #6c757d;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #38bdf8;
+            padding-left: 0.75rem;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        th {
+            background: #e2e8f0;
+            font-weight: 600;
+        }
+
+        .alert {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .alert-warning {
+            background: #fee2e2;
+            border-left-color: #ef4444;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            border-left-color: #3b82f6;
+        }
+
+        a {
+            color: #38bdf8;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        hr {
+            margin: 2rem 0;
+            border: none;
+            border-top: 1px solid #cbd5e1;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+            .site-header nav a {
+                display: inline-block;
+                margin: 0.25rem;
+                font-size: 0.85rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="site-header">
+        <nav>
+            <a href="https://ximilnet.github.io/homelab-blog/">🏠 Home</a>
+            <a href="#blog">📝 Blog</a>
+            <a href="#contact">📧 Contact</a>
+        </nav>
+    </div>
+
+    <h1>Homelab OPSEC 🔒</h1>
+    <p>Proxmox, LXC, WireGuard, and self-hosted security — one tutorial at a time.</p>
+
+    <hr>
+
+    <h2 id="blog">📝 Latest Post</h2>
+
+    <article>
+        <h2>Proxmox LXC Explained: What You're Actually Creating (Beginner Tutorial)</h2>
+        <div class="post-meta">📅 April 23, 2026 | 🏷️ Proxmox, LXC, Beginner</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+
+        <p><strong>Replace the video ID above with your actual YouTube video ID.</strong> The video ID is the 11-character code in your YouTube URL (e.g., <code>https://youtu.be/ABC123DEFgh</code> → <code>ABC123DEFgh</code>).</p>
+
+        <h2>What is Proxmox?</h2>
+        <p>Proxmox is a hypervisor—software that lets you run multiple virtual machines and containers on a single physical server. Think of it as a hotel building. The hotel is the physical server. The rooms are your containers and virtual machines.</p>
+
+        <h2>LXC vs VM: What's the Difference?</h2>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr><th>Feature</th><th>Virtual Machine (VM)</th><th>LXC Container</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Kernel</td><td>Own kernel (more isolation)</td><td>Shares host kernel</td></tr>
+                    <tr><td>Resources</td><td>Heavy (more RAM, disk)</td><td>Lightweight (less RAM, disk)</td></tr>
+                    <tr><td>Startup time</td><td>Minutes</td><td>Seconds</td></tr>
+                    <tr><td>OS support</td><td>Any (Windows, BSD, Linux)</td><td>Linux only</td></tr>
+                    <tr><td>Use case</td><td>Strong isolation, different OS</td><td>Fast, efficient Linux services</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert">
+            <strong>💡 Which should you choose?</strong><br>
+            For Windows or BSD → use a VM.<br>
+            For Linux services (WireGuard, Jellyfin, Nextcloud) → use an LXC container.
+        </div>
+
+        <h2>Creating Your First LXC</h2>
+
+        <h3>Step 1: Download a Template</h3>
+        <p>In Proxmox go to <strong>local storage → CT Templates → Download</strong>. Choose <strong>Debian 12</strong>.</p>
+
+        <h3>Step 2: Create the Container</h3>
+        <ul>
+            <li><strong>General:</strong> ID (e.g., 106), hostname (e.g., <code>jellyfin-demo</code>), root password</li>
+            <li><strong>Template:</strong> Select Debian 12</li>
+            <li><strong>Root Disk:</strong> 8 GB (4 GB for basic services)</li>
+            <li><strong>CPU:</strong> 2 cores (1 is enough for lightweight services)</li>
+            <li><strong>Memory:</strong> 2 GB (512 MB for basic containers)</li>
+            <li><strong>Network:</strong> Static IP, gateway (e.g., 192.168.1.1), DNS (e.g., 192.168.1.1)</li>
+            <li><strong>Features:</strong> ✅ <strong>Unprivileged container</strong> (security) and ✅ <strong>Nesting</strong> (for Docker/systemd)</li>
+        </ul>
+
+        <h2>Inside the Container – First Commands</h2>
+        <p>Enter the container console (right-click → Console) and run:</p>
+
+        <pre><code># Check what OS is inside
+cat /etc/os-release
+
+# Update package list
+apt update
+
+# Upgrade installed packages
+apt upgrade -y</code></pre>
+
+        <h2>Install Jellyfin (Demo)</h2>
+        <pre><code># Add Jellyfin repository
+curl -fsSL https://repo.jellyfin.org/debian/jellyfin_team.gpg.key | gpg --dearmor -o /etc/apt/keyrings/jellyfin.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/jellyfin.gpg] https://repo.jellyfin.org/debian bookworm main" | tee /etc/apt/sources.list.d/jellyfin.list
+
+# Update and install
+apt update
+apt install jellyfin -y</code></pre>
+
+        <p>Open your browser and go to <code>http://&lt;LXC_IP&gt;:8096</code>. The Jellyfin setup page should appear.</p>
+
+        <h2>Command Definitions for Beginners</h2>
+        <ul>
+            <li><code>cat</code> – Concatenate; reads and displays file contents</li>
+            <li><code>apt</code> – Advanced Package Tool; package manager for Debian/Ubuntu</li>
+            <li><code>curl</code> – Client URL; transfers data over the internet</li>
+            <li><code>gpg</code> – GNU Privacy Guard; verifies digital signatures</li>
+            <li><code>|</code> (pipe) – Sends output from one command to another</li>
+            <li><code>-y</code> – Automatically answers "yes" to confirmation prompts</li>
+        </ul>
+
+        <div class="alert alert-info">
+            <strong>🔒 OPSEC Note:</strong> Always check <strong>Unprivileged container</strong> – it isolates the container from the Proxmox host. Keep containers updated with <code>apt update &amp;&amp; apt upgrade</code> regularly.
+        </div>
+
+        <h2>What's Next?</h2>
+        <ul>
+            <li>🔐 WireGuard VPN in an LXC</li>
+            <li>🔄 Caddy reverse proxy with internal HTTPS</li>
+            <li>📡 Mounting SMB/NFS shares for Jellyfin</li>
+            <li>🔎 Self-hosted SearXNG</li>
+        </ul>
+    </article>
+
+    <hr>
+
+    <h2 id="contact">📧 Contact</h2>
+    <p>Have questions or suggestions? Reach out:</p>
+    <ul>
+        <li>📺 <a href="https://youtube.com/c/YOUR_CHANNEL">YouTube Channel</a> (replace with your channel URL)</li>
+        <li>🐙 <a href="https://github.com/ximilnet">GitHub</a></li>
+        <li>💬 Leave a comment on the video — I read every one</li>
+    </ul>
+
+    <div class="site-footer">
+        <p>🔒 Built with HTML/CSS · Hosted on GitHub Pages · OPSEC-focused homelab tutorials</p>
+        <p>© 2026 Homelab OPSEC — All content is original. <a href="#">Back to top ↑</a></p>
+    </div>
+</div>
+</body>
+</html>
